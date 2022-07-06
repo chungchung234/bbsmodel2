@@ -71,4 +71,32 @@ public class CalendarDao {
         }
         return list;
     }
+
+    public boolean addCalendar(CalendarDto cal){
+        String sql = " insert into calendar(id, title, content, rdate, wdate )" +
+                " values(?,?,?,?,now())";
+
+        Connection conn = null;
+        PreparedStatement psmt = null;
+
+        int count = 0;
+
+
+        try {
+            conn = DBConnection.getConnection();
+            psmt = conn.prepareStatement(sql);
+            psmt.setString(1,cal.getId());
+            psmt.setString(2,cal.getTitle());
+            psmt.setString(3,cal.getContent());
+            psmt.setString(4,cal.getRdate());
+
+            count = psmt.executeUpdate();
+
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            DBClose.close(conn, psmt,null);
+        }
+        return count>0?true:false;
+    }
 }
