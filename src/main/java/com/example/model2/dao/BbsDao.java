@@ -1,8 +1,8 @@
-package com.example.dao;
+package com.example.model2.dao;
 
-import com.example.db.DBClose;
-import com.example.db.DBConnection;
-import com.example.dto.BbsDto;
+import com.example.model2.db.DBClose;
+import com.example.model2.db.DBConnection;
+import com.example.model2.dto.BbsDto;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,10 +11,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+
+
 public class BbsDao {
 	
 	private static BbsDao dao = new BbsDao();
-
+	
 	private BbsDao() {
 	}
 	
@@ -330,9 +332,9 @@ public class BbsDao {
 	}
 	
 	public void readcount(int seq) {
-		String sql = " UPDATE bbs "
-				   + " SET readcount=readcount+1 "
-				   + " WHERE seq=? ";
+		String sql = " UPDATE BBS "
+				   + " SET READCOUNT=READCOUNT+1 "
+				   + " WHERE SEQ=? ";
 		
 		Connection conn = null;			
 		PreparedStatement psmt = null;	
@@ -414,42 +416,45 @@ public class BbsDao {
 		
 		return count>0?true:false;
 	}
-
-	public boolean answer(int seq, BbsDto bbs){
-
-		String sql1 = " UPDATE bbs " +
-				" SET step+1" +
-				" WHERE ref = (SELECT ref FROM (SELECT ref FROM bbs a WHERE seq=?) A) " +
-				" AND step > (SELECT step FROM (SELECT step FROM bbs b WHERE seq=?) B) "
-				;
-		String sql2 = " INSERT INTO bbs (id, " +
-				" ref, step, depth, " +
-				" title, content, wdate, del ,readcount) " +
-				" VALUES(?, " +
-				"  (SELECT ref FROM bbs a WHERE seq = ?), " +
-				" (SELECT step FROM bbs b WHERE seq = ?)+1, " +
-				" (SELECT deth FROM bbs c WHERE seq = ?)+1, " +
-				" ?, ?, now(), 0,0) ";
-
+	
+	//					  부모글번호  새로운 댓글
+	public boolean answer(int seq, BbsDto bbs) {
+		
+		// update
+		String sql1 = " update bbs "
+					+ " set step=step+1 "
+					+ " where ref = (select ref from (select ref from bbs a where seq=?) A) "
+					+ "   and step > (select step from (select step from bbs b where seq=?) B) ";
+		
+		// insert
+		String sql2 = " insert into bbs(id, "
+					+ "					ref, step, depth, "
+					+ "					title, content, wdate, del, readcount) "
+					+ " values(?,"
+					+ "                 (select ref from bbs a where seq=?), "
+					+ "                 (select step from bbs b where seq=?) + 1, "
+					+ "                 (select depth from bbs c where seq=?) + 1, "
+					+ "                 ?, ?, now(), 0, 0)";
+		
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		int count = 0;
-
-
+		
 		try {
-			conn = DBConnection.getConnection();
+			conn = DBConnection.getConnection();		
 			conn.setAutoCommit(false);
-
+			
+			// update
 			psmt = conn.prepareStatement(sql1);
 			psmt.setInt(1, seq);
 			psmt.setInt(2, seq);
-
+			
 			count = psmt.executeUpdate();
-
-
-			// psmt reset
+			
+			// psmt 초기화
 			psmt.clearParameters();
-
+			
+			// insert
 			psmt = conn.prepareStatement(sql2);
 			psmt.setString(1, bbs.getId());
 			psmt.setInt(2, seq);
@@ -457,28 +462,32 @@ public class BbsDao {
 			psmt.setInt(4, seq);
 			psmt.setString(5, bbs.getTitle());
 			psmt.setString(6, bbs.getContent());
-
+			
 			count += psmt.executeUpdate();
-
-			conn.commit();
-
+			
+			conn.commit();			
+			
 		} catch (SQLException e) {
+			
 			try {
 				conn.rollback();
-			} catch (SQLException ex) {
-e.printStackTrace();			}
-		}finally {
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}			
+			e.printStackTrace();
+		} finally {			
 			try {
 				conn.setAutoCommit(true);
 			} catch (SQLException e) {
-				e.printStackTrace();			}
-			DBClose.close(conn, psmt, null);
+				e.printStackTrace();
 			}
-
-
-		return count>0?true:false;
+			
+			DBClose.close(conn, psmt, null);
+		}
+		
+		return count>0?true:false;		
 	}
-	
 	
 }
 

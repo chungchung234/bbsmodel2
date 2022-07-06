@@ -1,13 +1,14 @@
-package com.example.dao;
+package com.example.model2.dao;
+
+import com.example.model2.db.DBClose;
+import com.example.model2.db.DBConnection;
+import com.example.model2.dto.MemberDto;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import com.example.db.DBClose;
-import com.example.db.DBConnection;
-import com.example.dto.MemberDto;
 
 public class MemberDao {
 

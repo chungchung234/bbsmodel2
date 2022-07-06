@@ -25,7 +25,8 @@
 
 <div class="center">
 
-<form action="loginAf.jsp" method="post">
+<form action="../member" method="post">
+<input type="hidden" name="param" value="loginAf">
 
 <table border="1">
 <tr>
@@ -44,7 +45,7 @@
 <tr>
 	<td colspan="2">
 		<input type="submit" value="로그인">
-		<a href="regi.jsp">회원가입</a>
+		<a href="<%=request.getContextPath() %>/member?param=regi">회원가입</a>
 	</td>
 </tr>
 

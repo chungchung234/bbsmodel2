@@ -24,7 +24,8 @@
 
 <div class="center">
 
-<form action="regiAf.jsp" method="post">
+<form action="<%=request.getContextPath() %>/member" method="post">
+<input type="hidden" name="param" value="regiAf">
 
 <table border="1">
 <tr>
@@ -72,10 +73,10 @@ $(function () {
 	
 		$.ajax({
 			type:"post",
-			url:"./idcheck.jsp",
+			url:"../member?param=idcheck",
 			data:{ "id":$("#id").val() },
 			success:function( data ){
-				if(data.trim() == "YES"){
+				if(data.msg.trim() == "YES"){
 					$("#idcheck").css("color", "#0000ff");
 					$("#idcheck").html('사용할 수 있는 id입니다');
 				}else{
