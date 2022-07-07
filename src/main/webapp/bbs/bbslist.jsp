@@ -106,6 +106,8 @@ int bbsPage = (Integer)request.getAttribute("bbsPage");
 <h2>게시판</h2>
 <br>
 <a href="calendar.jsp">일정관리</a>
+
+<a href="pdslist.jsp">자료실</a>
 <br>
 <div align="center">
 

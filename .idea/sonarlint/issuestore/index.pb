@@ -1,6 +1,4 @@
 
-W
-'.idea/artifacts/model2_war_exploded.xml,2/8/283d9330ddcff6ab26fe5f3d7fc2a6bd0f1fdaa8
 N
 src/main/webapp/bbs/answer.jsp,2/4/24cdd04f9fe30b711cb14ec11d864acaaff3abec
 `
@@ -25,8 +23,6 @@ c
 3src/main/java/com/example/model2/dao/MemberDao.java,9/e/9e9cabd222bac3e6e27b8ea51331777a159b3b28
 c
 3src/main/java/com/example/model2/dto/MemberDto.java,c/3/c3019be787fa33a4ed8019f36534a2670a9be531
-7
-pom.xml,4/4/442292b8a7efeabbe4cc176709b833b1792140ec
 O
 src/main/webapp/member/regi.jsp,6/f/6f16c0421b20763ea2392aa6c29818cf1dbaefc6
 O
