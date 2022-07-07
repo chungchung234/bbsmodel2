@@ -1,4 +1,7 @@
-<%--
+<%@ page import="static com.example.model2.util.CallUtil.two" %>
+<%@ page import="java.util.Calendar" %>
+<%@ page import="com.example.model2.dao.CalendarDao" %>
+<%@ page import="com.example.model2.dto.CalendarDto" %><%--
   Created by IntelliJ IDEA.
   User: chung
   Date: 2022/07/06
@@ -20,7 +23,7 @@
     String hour = request.getParameter("hour");
     String min = request.getParameter("min");
 
-
+    String rdate = year + two(month) + two(day) + two(hour);
 %>
 
 <html>
@@ -28,6 +31,32 @@
     <title>Title</title>
 </head>
 <body>
+
+<%
+    CalendarDao dao = CalendarDao.getInstance();
+
+    boolean isS = dao.addCalendar(new CalendarDto(id, title, content, rdate));
+    if (isS) {
+%>
+  <script type="text/javascript">
+      alert('add');
+      location.href = "Calendar.jsp";
+
+  </script>
+<%
+} else {
+%>
+<script type="text/javascript">
+    alert('fail');
+    location.href = "Calendar.jsp";
+
+</script>
+
+<%
+
+    }
+
+%>
 
 </body>
 </html>

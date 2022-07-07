@@ -6,15 +6,15 @@ import java.util.List;
 
 public class CallUtil {
 
-    public boolean nvl(String msg) {
+    public static boolean nvl(String msg) {
         return msg == null || msg.trim().equals("") ? true : false;
     }
 
-    public String two(String msg) {
+    public static String two(String msg) {
         return msg.trim().length() < 2 ? "0" + msg.trim() : msg.trim();
     }
 
-    public String callist(int year, int month, int day) {
+    public static String callist(int year, int month, int day) {
         String str = "";
 
         str += String.format("$nbsp:<a href='callist.jsp?year=%d&month=%d&day=%d'>", year, month, day);
@@ -25,7 +25,7 @@ public class CallUtil {
 
     }
 
-    public String showPen(int year, int month, int day) {
+    public static String showPen(int year, int month, int day) {
         String str = "";
 
         String image = "<img src='image/pen2.png' width='18px' height='18px'>";
@@ -35,7 +35,7 @@ public class CallUtil {
 
     }
 
-    public String dot3(String msg) {
+    public static String dot3(String msg) {
         String str = "";
         if (msg.length() >= 10) {
             str = msg.substring(0, 10);
@@ -48,7 +48,7 @@ public class CallUtil {
 
     }
 
-    public String makeTable(int year, int month, int day, List<CalendarDto> list) {
+    public static String makeTable(int year, int month, int day, List<CalendarDto> list) {
         String str = "";
 
         String dates = (year + "") + two(month + "") + two(day + "");

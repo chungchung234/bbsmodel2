@@ -103,8 +103,6 @@ int bbsPage = (Integer)request.getAttribute("bbsPage");
 
 %>
 
-
-
 <h2>게시판</h2>
 <br>
 <a href="calendar.jsp">일정관리</a>

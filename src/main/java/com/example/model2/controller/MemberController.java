@@ -24,7 +24,7 @@ public class MemberController extends HttpServlet{
 		doProcess(req, resp);
 	}
 	
-	public void doProcess(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
+	public void doProcess(HttpServletRequest req, HttpServletResponse resp) throws  IOException{
 		req.setCharacterEncoding("utf-8");
 		
 		String param = req.getParameter("param");
